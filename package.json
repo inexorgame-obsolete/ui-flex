@@ -1,0 +1,24 @@
+{
+  "name": "@inexor-ui/flex",
+  "version": "0.9.0",
+  "description": "A user interface for flex",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inexor-game/flex.git"
+  },
+  "keywords": [
+    "inexor",
+    "ui"
+  ],
+  "author": "The Inexor Team",
+  "license": "Zlib",
+  "bugs": {
+    "url": "https://github.com/inexor-game/flex/issues"
+  },
+  "private": "true",
+  "homepage": "https://github.com/inexor-game/flex#readme",
+  "dependencies": {
+    "bootstrap": "4.0.0-alpha6",
+    "bootstrap-material-design": "^0.5.10"
+  }
+}
