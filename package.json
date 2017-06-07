@@ -18,7 +18,7 @@
   "private": "true",
   "homepage": "https://github.com/inexor-game/flex#readme",
   "dependencies": {
-    "bootstrap": "4.0.0-alpha6",
+    "bootstrap": "4.0.0-alpha.6",
     "bootstrap-material-design": "^0.5.10"
   }
 }
