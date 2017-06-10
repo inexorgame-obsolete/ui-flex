@@ -1,8 +1,7 @@
 <template>
   <div class="hello">
-    <h1>Instances</h1>
-
-    <div class="justify-content-centermy-1 row">
+    <br />
+    <div class="justify-content-center row my-1">
       <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
         <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
         </b-form-select>
@@ -12,134 +11,107 @@
       </b-form-fieldset>
     </div>
 
-    <b-table striped hover :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
+    <b-table striped hover :items="instances" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
       <template slot="name" scope="item">
-        {{item.value.first}} {{item.value.last}}
-      </template>
-      <template slot="isActive" scope="item">
-        {{item.value?'Yes :)':'No :('}}
+        <strong>{{item.item.name}}</strong>
+        <br />
+        {{item.item.description}}
       </template>
       <template slot="actions" scope="item">
-        <b-btn size="sm" @click="details(item.item)">Details</b-btn>
+        <b-btn size="sm" @click="changeStateAction(item.item, 'start')">Start</b-btn>
+        <b-btn size="sm" @click="changeStateAction(item.item, 'connect')">Connect</b-btn>
+        <b-btn size="sm" @click="changeStateAction(item.item, 'disconnect')">Disconnect</b-btn>
+        <b-btn size="sm" @click="changeStateAction(item.item, 'stop')">Stop</b-btn>
       </template>
     </b-table>
     <div class="justify-content-center row my-1">
-      <b-pagination size="md" :total-rows="this.items.length" :per-page="perPage" v-model="currentPage" />
+      <b-pagination size="md" :total-rows="this.instances.length" :per-page="perPage" v-model="currentPage" />
     </div>
   </div>
 </template>
 
 <script>
+
+import axios from 'axios';
+
 export default {
-  name: 'hello',
-  data() {
-    return {
-      items: [{
-        isActive: true,
-        age: 40,
-        name: {
-          first: 'Dickerson',
-          last: 'Macdonald',
-        },
-      }, {
-        isActive: false,
-        age: 21,
-        name: {
-          first: 'Larsen',
-          last: 'Shaw',
-        },
-      }, {
-        isActive: false,
-        age: 9,
-        state: 'success',
-        name: {
-          first: 'Mitzi',
-          last: 'Navarro',
-        },
-      }, {
-        isActive: false,
-        age: 89,
-        name: {
-          first: 'Geneva',
-          last: 'Wilson',
-        },
-      }, {
-        isActive: true,
-        age: 38,
-        name: {
-          first: 'Jami',
-          last: 'Carney',
-        },
-      }, {
-        isActive: false,
-        age: 27,
-        name: {
-          first: 'Essie',
-          last: 'Dunlap',
-        },
-      }, {
-        isActive: true,
-        age: 40,
-        name: {
-          first: 'Dickerson',
-          last: 'Macdonald',
-        },
-      }, {
-        isActive: false,
-        age: 21,
-        name: {
-          first: 'Larsen',
-          last: 'Shaw',
-        },
-      }, {
-        isActive: false,
-        age: 26,
-        name: {
-          first: 'Mitzi',
-          last: 'Navarro',
-        },
-      }, {
-        isActive: false,
-        age: 22,
-        name: {
-          first: 'Geneva',
-          last: 'Wilson',
-        },
-      }, {
-        isActive: true,
-        age: 38,
-        name: {
-          first: 'Jami',
-          last: 'Carney',
-        },
-      }, {
-        isActive: false,
-        age: 27,
-        name: {
-          first: 'Essie',
-          last: 'Dunlap',
-        },
-      }],
-      fields: {
-        name: {
-          label: 'Person Full name',
-          sortable: true,
-        },
-        age: {
-          label: 'Person age',
-          sortable: true,
-        },
-        isActive: {
-          label: 'is Active',
-        },
-        actions: {
-          label: 'Actions',
-        },
-      },
-      currentPage: 1,
-      perPage: 5,
-      filter: null,
-    };
+  created() {
+    this.getInstances();
   },
+  methods: {
+    getInstances() {
+      this.instances = [];
+      axios.get('http://localhost:31416/api/v1/instances') // /31417/dump
+        .then((response) => {
+          // console.log(response);
+          for (let i = 0; i < response.data.length; i += 1) {
+            this.getInstance(response.data[i]);
+          }
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
+    getInstance(id) {
+      const url = `http://localhost:31416/api/v1/instances/${id}/dump`;
+      axios.get(url)
+        .then((response) => {
+          // this.instances[id] = response.data;
+          if (response.data !== 0) {
+            // const data = response;
+            console.log(response.data);
+            this.instances.push(response.data);
+          }
+          console.log(this.instances);
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
+    changeStateAction(instance, action) {
+      const url = `http://localhost:31416/api/v1/instances/${instance.port}/${action}`;
+      axios.get(url)
+        .then((response) => {
+          console.log(response);
+          this.getInstances();
+        });
+    },
+  },
+  data: () => ({
+    instances: [],
+    errors: [],
+    fields: {
+      name: {
+        label: 'Name',
+        sortable: true,
+      },
+      port: {
+        label: 'Port',
+        sortable: true,
+      },
+      state: {
+        label: 'State',
+        sortable: true,
+      },
+      pid: {
+        label: 'PID',
+        sortable: true,
+      },
+      autostart: {
+        label: 'Auto Start',
+        sortable: true,
+      },
+      autorestart: {
+        label: 'Auto Restart',
+        sortable: true,
+      },
+      actions: {
+        label: 'Actions',
+      },
+    },
+    currentPage: 1,
+    perPage: 5,
+    filter: null,
+  }),
 };
 </script>

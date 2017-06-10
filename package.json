@@ -24,6 +24,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "bootstrap": "4.0.0-alpha.6",
     "bootstrap-material-design": "^0.5.10",
     "bootstrap-vue": "^0.16.1",
