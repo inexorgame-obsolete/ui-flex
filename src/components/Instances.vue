@@ -18,10 +18,12 @@
         {{item.item.description}}
       </template>
       <template slot="actions" scope="item">
-        <b-btn size="sm" @click="changeStateAction(item.item, 'start')">Start</b-btn>
-        <b-btn size="sm" @click="changeStateAction(item.item, 'connect')">Connect</b-btn>
-        <b-btn size="sm" @click="changeStateAction(item.item, 'disconnect')">Disconnect</b-btn>
-        <b-btn size="sm" @click="changeStateAction(item.item, 'stop')">Stop</b-btn>
+        <b-btn v-if="item.item.state == 'stopped'" size="sm" @click="changeStateAction(item.item, 'start')">Start</b-btn>
+        <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'connect')">Connect</b-btn>
+        <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'disconnect')">Disconnect</b-btn>
+        <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'pause')">Pause</b-btn>
+        <b-btn v-if="item.item.state == 'paused'" size="sm" @click="changeStateAction(item.item, 'resume')">Resume</b-btn>
+        <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'stop')">Stop</b-btn>
       </template>
     </b-table>
     <div class="justify-content-center row my-1">
