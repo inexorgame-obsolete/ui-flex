@@ -24,7 +24,7 @@
         {{item.item.profile.port}}
       </template>
       <template slot="actions" scope="item">
-        <b-btn size="sm" @click="deleteProfile(item.item)">Delete</b-btn>
+        <b-btn size="sm" @click="removeProfile(item.item)">Delete</b-btn>
         <b-btn size="sm" @click="switchToProfile(item.item)">Switch To</b-btn>
       </template>
     </b-table>
@@ -33,7 +33,24 @@
     </div>
     <br />
     <div class="justify-content-center row my-1">
-      <b-btn @click="shutdown()">Shutdown</b-btn>
+      <b-form-fieldset horizontal label="Name" class="col-3" :label-size="1">
+        <b-form-input v-model="name" placeholder="Name"></b-form-input>
+      </b-form-fieldset>
+      <b-form-fieldset horizontal label="Hostname" class="col-3" :label-size="1">
+        <b-form-input v-model="hostname" placeholder="Hostname"></b-form-input>
+      </b-form-fieldset>
+      <b-form-fieldset horizontal label="Port" class="col-3" :label-size="1">
+        <b-form-input v-model="port" placeholder="Port"></b-form-input>
+      </b-form-fieldset>
+      <b-form-fieldset horizontal class="col-3">
+        <b-btn @click="createProfile(name, hostname, port)">Create new profile</b-btn>
+      </b-form-fieldset>
+    </div>
+    <br />
+    <div class="justify-content-center row my-1">
+      <b-button-toolbar>
+        <b-btn @click="shutdown()" variant="danger">Shutdown Flex</b-btn>
+      </b-button-toolbar>
     </div>
   </div>
 </template>
@@ -51,7 +68,6 @@ export default {
       this.profiles = [];
       axios.get('http://localhost:31416/api/v1/profiles')
         .then((response) => {
-          console.log(response);
           for (let i = 0; i < response.data.length; i += 1) {
             this.getProfile(response.data[i]);
           }
@@ -67,20 +83,39 @@ export default {
           if (response.data !== 0) {
             this.profiles.push({ name, profile: response.data });
           }
-          console.log(this.profiles);
         })
         .catch((e) => {
           this.errors.push(e);
         });
     },
-    deleteProfile(profile) {
-      console.log(profile.name);
+    createProfile(name, hostname, port) {
+      const url = `http://localhost:31416/api/v1/profiles/${name}`;
+      axios.post(url, {
+        name,
+        hostname,
+        port,
+      })
+        .then(() => {
+          this.getProfiles();
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
+    removeProfile(profile) {
+      const url = `http://localhost:31416/api/v1/profiles/${profile.name}`;
+      axios.delete(url)
+        .then(() => {
+          this.getProfiles();
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
     },
     switchToProfile(profile) {
       const url = `http://localhost:31416/api/v1/profiles/${profile.name}/switch`;
       axios.get(url)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
         })
         .catch((e) => {
           this.errors.push(e);
@@ -118,6 +153,9 @@ export default {
     currentPage: 1,
     perPage: 5,
     filter: null,
+    name: '',
+    hostname: 'localhost',
+    port: '31416',
   }),
 };
 </script>
