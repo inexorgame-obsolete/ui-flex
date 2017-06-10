@@ -58,7 +58,6 @@ export default {
           if (response.data !== 0) {
             this.instances.push(response.data);
           }
-          console.log(this.instances);
         })
         .catch((e) => {
           this.errors.push(e);
@@ -94,6 +93,10 @@ export default {
       },
       autostart: {
         label: 'Auto Start',
+        sortable: true,
+      },
+      autoconnect: {
+        label: 'Auto Connect',
         sortable: true,
       },
       autorestart: {
