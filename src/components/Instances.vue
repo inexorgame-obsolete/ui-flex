@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="instances">
     <br />
     <div class="justify-content-center row my-1">
       <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
@@ -41,9 +41,8 @@ export default {
   methods: {
     getInstances() {
       this.instances = [];
-      axios.get('http://localhost:31416/api/v1/instances') // /31417/dump
+      axios.get('http://localhost:31416/api/v1/instances')
         .then((response) => {
-          // console.log(response);
           for (let i = 0; i < response.data.length; i += 1) {
             this.getInstance(response.data[i]);
           }
@@ -56,10 +55,7 @@ export default {
       const url = `http://localhost:31416/api/v1/instances/${id}/dump`;
       axios.get(url)
         .then((response) => {
-          // this.instances[id] = response.data;
           if (response.data !== 0) {
-            // const data = response;
-            console.log(response.data);
             this.instances.push(response.data);
           }
           console.log(this.instances);
@@ -71,8 +67,7 @@ export default {
     changeStateAction(instance, action) {
       const url = `http://localhost:31416/api/v1/instances/${instance.port}/${action}`;
       axios.get(url)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.getInstances();
         });
     },
