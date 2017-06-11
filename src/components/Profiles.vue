@@ -14,6 +14,8 @@
     <b-table striped hover :items="profiles" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
       <template slot="name" scope="item">
         <strong>{{item.item.name}}</strong>
+        <b-badge variant="primary" v-if="item.item.name == defaultProfile">Default</b-badge>
+        <b-badge variant="success" v-if="item.item.name == currentProfile">Current</b-badge>
         <br />
         {{item.item.profile.description}}
       </template>
@@ -62,6 +64,8 @@ import axios from 'axios';
 export default {
   created() {
     this.getProfiles();
+    this.getDefaultProfile();
+    this.getCurrentProfile();
   },
   methods: {
     getProfiles() {
@@ -83,6 +87,24 @@ export default {
           if (response.data !== 0) {
             this.profiles.push({ name, profile: response.data });
           }
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
+    getDefaultProfile() {
+      axios.get('http://localhost:31416/api/v1/tree/profiles/default')
+        .then((response) => {
+          this.defaultProfile = response.data;
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
+    getCurrentProfile() {
+      axios.get('http://localhost:31416/api/v1/tree/profiles/current')
+        .then((response) => {
+          this.currentProfile = response.data;
         })
         .catch((e) => {
           this.errors.push(e);
@@ -156,6 +178,8 @@ export default {
     name: '',
     hostname: 'localhost',
     port: '31416',
+    defaultProfile: 'client',
+    currentProfile: 'client',
   }),
 };
 </script>
