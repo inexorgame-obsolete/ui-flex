@@ -3,10 +3,12 @@ import Router from 'vue-router';
 import Dashboard from '@/components/Dashboard';
 import Profiles from '@/components/Profiles';
 import Instances from '@/components/Instances';
+import Instance from '@/components/Instance';
 import Media from '@/components/Media';
 import Servers from '@/components/Servers';
 import Interfaces from '@/components/Interfaces';
-import Logging from '@/components/Logging';
+// import Logging from '@/components/Logging';
+// import Tree from '@/components/Tree';
 
 Vue.use(Router);
 
@@ -14,32 +16,40 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Dashboard',
+      name: 'dashboard',
       component: Dashboard,
     }, {
       path: '/profiles',
-      name: 'Profiles',
+      name: 'profiles',
       component: Profiles,
     }, {
       path: '/instances',
-      name: 'Instances',
+      name: 'instances',
       component: Instances,
     }, {
+      path: '/instances/:instanceId',
+      name: 'instances.detail',
+      component: Instance,
+    }, {
       path: '/media',
-      name: 'Media',
+      name: 'media',
       component: Media,
     }, {
       path: '/servers',
-      name: 'Servers',
+      name: 'servers',
       component: Servers,
     }, {
       path: '/interfaces',
-      name: 'User Interfaces',
+      name: 'interfaces',
       component: Interfaces,
-    }, {
-      path: '/logging',
-      name: 'Logging',
-      component: Logging,
+//    }, {
+//      path: '/logging',
+//      name: 'Logging',
+//      component: Logging,
+//    }, {
+//      path: '/tree',
+//      name: 'Tree',
+//      component: Tree,
     },
   ],
 });
