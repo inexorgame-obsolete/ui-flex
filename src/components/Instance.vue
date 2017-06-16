@@ -110,12 +110,29 @@
           </div>
         </div>
       </b-tab>
-      <b-tab title="Console">
-        <h1>Instance {{$route.params.instanceId}} Console</h1>
-      </b-tab>
       <b-tab title="Tree">
-        <h1>Instance {{$route.params.instanceId}} Tree</h1>
-        <b-card>I'm the card in tab</b-card>
+        <div class="row">
+          <div class="col-md-3">
+            <tree-view :data="instance" :options=treeOptions></tree-view>
+          </div>
+          <div class="col-md-9">
+            <br />
+            <h3>Tree Node</h3>
+            <br />
+            <div class="form-group">
+              <label>Datatype</label>
+              <input type="text" class="form-control" v-model="instance.name">
+            </div>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" v-model="instance.name">
+            </div>
+            <div class="form-group">
+              <label>Value</label>
+              <input type="text" class="form-control" v-model="instance.name">
+            </div>
+          </div>
+        </div>
       </b-tab>
     </b-tabs>
   </div>
@@ -129,6 +146,7 @@ export default {
   created() {
     this.getCurrentProfile();
     this.getInstance(this.$route.params.instanceId);
+    this.treeOptions.rootObjectKey = `/instances/${this.$route.params.instanceId}`;
   },
   methods: {
     getInstance(id) {
@@ -166,6 +184,10 @@ export default {
   data: () => ({
     instance: {},
     currentProfile: '',
+    treeOptions: {
+      maxDepth: 99,
+      rootObjectKey: 'root',
+    },
     states: {
       stopped: {
         label: 'Stopped',
@@ -221,3 +243,74 @@ export default {
   }),
 };
 </script>
+
+<style>
+.tree-view-item {
+  font-family: monospace;
+  font-size: 16px;
+  margin-left: 18px;
+}
+
+.tree-view-wrapper {
+  overflow: auto;
+  margin-top: 20px;
+}
+
+/* Find the first nested node and override the indentation */
+.tree-view-item-root > .tree-view-item-leaf > .tree-view-item {
+  /* margin-left: 40px; */
+}
+
+/* Root node should not be indented */
+.tree-view-item-root {
+  margin-left: 18px;
+}
+
+.tree-view-item-node {
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+}
+
+.tree-view-item-leaf {
+  white-space: nowrap;
+  padding-left: 18px;
+}
+
+/*
+.tree-view-item-key {
+  font-weight: bold;
+  padding-left: 18px;
+}
+
+.tree-view-item-key-with-chevron {
+  padding-left: 14px;
+}
+
+
+.tree-view-item-key-with-chevron.opened::before {
+    top:4px;
+    transform: rotate(90deg);  
+    -webkit-transform: rotate(90deg);
+}
+
+.tree-view-item-key-with-chevron::before {
+    color: #444;
+    content: '\25b6';
+    font-size: 10px;
+    left: 1px;
+    position: absolute;
+    top: 3px;
+    transition: -webkit-transform .1s ease;
+    transition: transform .1s ease;
+    transition: transform .1s ease, -webkit-transform .1s ease;
+    -webkit-transition: -webkit-transform .1s ease;
+}
+*/
+
+.tree-view-item-hint {
+  color: #ccc
+}
+
+</style>
+

@@ -16,12 +16,7 @@
         </b-nav>
       </b-collapse>
     </b-navbar>
-    <br />
-    <div class="container">
-      <div class="row">
-        <router-view></router-view>
-      </div>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -76,5 +71,15 @@ export default {
   border-radius: 60px;
 }
 
-
+.navbar-default .navbar-nav > .active{
+  color: #000;
+  background: #ff0000;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #000;
+  background: #d65c14;
+}
+ 
 </style>

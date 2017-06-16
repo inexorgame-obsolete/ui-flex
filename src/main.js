@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import Icon from 'vue-awesome/components/Icon';
+import TreeView from 'vue-json-tree-view';
 
 import App from './App';
 import router from './router';
@@ -16,6 +17,8 @@ import router from './router';
 Vue.use(BootstrapVue);
 
 Vue.component('icon', Icon);
+
+Vue.use(TreeView);
 
 Vue.config.productionTip = false;
 
