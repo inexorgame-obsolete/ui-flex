@@ -12,10 +12,12 @@
     </div>
 
     <b-table striped hover :items="profiles" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
-      <template slot="name" scope="item">
-        <strong>{{item.item.name}}</strong>
+      <template slot="badge" scope="item">
         <b-badge variant="primary" v-if="item.item.name == defaultProfile">Default</b-badge>
         <b-badge variant="success" v-if="item.item.name == currentProfile">Current</b-badge>
+      </template>
+      <template slot="name" scope="item">
+        <strong>{{item.item.name}}</strong>
         <br />
         {{item.item.profile.description}}
       </template>
@@ -156,6 +158,10 @@ export default {
     profiles: [],
     errors: [],
     fields: {
+      badge: {
+        label: '',
+        sortable: true,
+      },
       name: {
         label: 'Name',
         sortable: true,
