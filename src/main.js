@@ -43,19 +43,32 @@ Vue.component('treenode', {
   template: `
 <div style="margin-left: 20px; margin-top: 10px;">
   <div v-if="isObject(value)" class="tree-node">
-    <icon name="plus-square-o"></icon> {{name}}
-    <div v-for="(value, name) in value">
+    <div @click=toggleCollapse>
+      <icon v-if="collapsed" name="plus-square-o"></icon>
+      <icon v-if="!collapsed" name="minus-square-o"></icon>
+      {{name}}
+    </div>
+    <div v-if="!collapsed" v-for="(value, name) in value">
       <treenode :name=name :value=value :path='getPath(path, name)' v-on:selectNode="selectNode"></treenode>
     </div>
   </div>
   <div v-if="!isObject(value)" @click="selectNode(path, name, value)" class="tree-item">
-    <icon name="minus-square-o"></icon> {{name}}
+    <icon name="square-o"></icon> {{name}}
   </div>
 </div>`,
   props: ['name', 'value', 'path'],
+  data: () => ({
+    collapsed: false,
+  }),
   methods: {
     isObject(obj) {
       return obj !== null && typeof obj === 'object';
+    },
+    toggleCollapse() {
+      this.collapsed = !this.collapsed;
+    },
+    isCollapsed() {
+      return this.collapsed;
     },
     getPath(path, name) {
       return `${path}.${name}`;
