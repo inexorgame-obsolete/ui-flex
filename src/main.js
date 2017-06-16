@@ -20,7 +20,7 @@ Vue.component('icon', Icon);
 
 Vue.component('inexortree', {
   template: `
-<div style="margin-left: 20px; margin-top: 10px;">
+<div class="inexor-tree-wrapper">
   <treenode :name=path :value=data :path=path v-on:selectNode="selectNode"></treenode>
   <!-- div v-for="(value, name) in data">
     <treenode :name=name :value=value :path='getPath(path, name)' v-on:selectNode="selectNode"></treenode>
@@ -41,7 +41,7 @@ Vue.component('inexortree', {
 
 Vue.component('treenode', {
   template: `
-<div style="margin-left: 20px; margin-top: 10px;">
+<div class="tree-node-wrapper">
   <div v-if="isObject(value)" class="tree-node">
     <div @click=toggleCollapse>
       <icon v-if="collapsed" name="plus-square-o"></icon>

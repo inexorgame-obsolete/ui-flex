@@ -264,20 +264,40 @@ export default {
 </script>
 
 <style>
-.inexor-tree {
-  height: 100%;
-  min-height: 100%;
-  overflow: scroll;
-}
 
 .fill { 
   min-height: 100%;
   height: 100%;
 }
 
+.inexor-tree-wrapper {
+  margin-left: 20px;
+  margin-top: 10px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  min-height: 100%;
+  /* overflow: hidden; */
+}
+
+.inexor-tree {
+  height: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.tree-node-wrapper {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
 .tree-node {
   font-family: monospace;
   font-size: 16px;
+  height: 100%;
+  min-height: 100%;
 }
 
 .tree-item {
