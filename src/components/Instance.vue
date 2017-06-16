@@ -5,19 +5,19 @@
         <br />
         <div class="container">
           <div class="row">
-            <div class="col-md-2">
-              <b-btn class="btn btn-primary btn-circle btn-xl">
+            <div class="col-md-2" style="text-align: center;">
+              <b-btn class="btn btn-primary btn-circle btn-xxl">
                 <icon :name="states[instance.state].icon"></icon>
               </b-btn>
               <br />
-              {{states[instance.state].label}}
+              <strong>{{states[instance.state].label}}</strong>
             </div>
             <div class="col-sm-10 col-md-6">
               <div class="container">
                 <div class="row">
                   <div class="col-sm-12 col-md-12">
                     <div class="form-group">
-                      <label>Type</label>
+                      <label>State</label>
                       <div class="input-group">
                         <input type="text" class="form-control" v-model="instance.state" readonly>
                         <span class="input-group-btn">
@@ -35,15 +35,9 @@
                 <div class="row">
                   <div class="col-sm-12 col-md-12">
                     <div class="form-group">
-                      <label>PID</label>
+                      <label>Process PID</label>
                       <input type="text" class="form-control" v-model="instance.pid" readonly>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <b-button-toolbar>
-                    </b-button-toolbar>
                   </div>
                 </div>
               </div>
@@ -54,11 +48,6 @@
       <b-tab title="Configuration" active>
         <br />
         <div class="container">
-          <div class="row">
-            <div class="col-sm-12 col-md-12">
-              <h1>Configuration of instance {{$route.params.instanceId}}</h1>
-            </div>
-          </div>
           <div class="row">
             <div class="col-sm-12 col-md-4">
               <div class="form-group">

@@ -67,5 +67,14 @@ export default {
   border-radius: 35px;
 }
 
+.btn-circle.btn-xxl {
+  width: 120px;
+  height: 120px;
+  padding: 10px 16px;
+  font-size: 36px;
+  line-height: 1.33;
+  border-radius: 60px;
+}
+
 
 </style>
