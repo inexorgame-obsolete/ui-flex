@@ -4688,13 +4688,6 @@ vue-hot-reload-api@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
 
-vue-json-tree-view@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/vue-json-tree-view/-/vue-json-tree-view-2.0.7.tgz#a2f896e713d3990a22957efa94ae1474b568c8ff"
-  dependencies:
-    lodash "^4.17.4"
-    vue "^2.0.0"
-
 vue-loader@^12.1.0:
   version "12.2.1"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-12.2.1.tgz#53f27c0973d386768f5a75156f4129b5efc6ba55"
@@ -4735,7 +4728,7 @@ vue-template-es2015-compiler@^1.2.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.5.2.tgz#a0a6c50c941d2a4abda963f2f42c337ac450ee95"
 
-vue@^2.0.0, vue@^2.2.6, vue@^2.3.3:
+vue@^2.2.6, vue@^2.3.3:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.3.4.tgz#5ec3b87a191da8090bbef56b7cfabd4158038171"
 

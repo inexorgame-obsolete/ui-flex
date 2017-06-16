@@ -3,47 +3,45 @@
     <b-tabs>
       <b-tab title="Instances">
         <br />
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-12 col-md-12">
-              <div class="justify-content-center row my-1">
-                <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
-                  <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
-                  </b-form-select>
-                </b-form-fieldset>
-                <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
-                  <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
-                </b-form-fieldset>
-              </div>
-              <b-table
-                striped
-                hover
-                :items="instances"
-                :fields="fields"
-                :current-page="currentPage"
-                :per-page="perPage"
-                :filter="filter"
-                @row-clicked="selectInstance">
-                <template slot="port" scope="item">
-                  <strong>{{item.item.port}}</strong>
-                </template>
-                <template slot="name" scope="item">
-                  <strong>{{item.item.name}}</strong>
-                  <br />
-                  {{item.item.description}}
-                </template>
-                <template slot="actions" scope="item">
-                  <b-btn v-if="item.item.state == 'stopped'" size="sm" @click="changeStateAction(item.item, 'start')">Start</b-btn>
-                  <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'connect')">Connect</b-btn>
-                  <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'disconnect')">Disconnect</b-btn>
-                  <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'pause')">Pause</b-btn>
-                  <b-btn v-if="item.item.state == 'paused'" size="sm" @click="changeStateAction(item.item, 'resume')">Resume</b-btn>
-                  <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'stop')">Stop</b-btn>
-                </template>
-              </b-table>
-              <div class="justify-content-center row my-1">
-                <b-pagination size="md" :total-rows="this.instances.length" :per-page="perPage" v-model="currentPage" />
-              </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <div class="justify-content-center row my-1">
+              <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+                <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
+                </b-form-select>
+              </b-form-fieldset>
+              <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+                <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
+              </b-form-fieldset>
+            </div>
+            <b-table
+              striped
+              hover
+              :items="instances"
+              :fields="fields"
+              :current-page="currentPage"
+              :per-page="perPage"
+              :filter="filter"
+              @row-clicked="selectInstance">
+              <template slot="port" scope="item">
+                <strong>{{item.item.port}}</strong>
+              </template>
+              <template slot="name" scope="item">
+                <strong>{{item.item.name}}</strong>
+                <br />
+                {{item.item.description}}
+              </template>
+              <template slot="actions" scope="item">
+                <b-btn v-if="item.item.state == 'stopped'" size="sm" @click="changeStateAction(item.item, 'start')">Start</b-btn>
+                <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'connect')">Connect</b-btn>
+                <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'disconnect')">Disconnect</b-btn>
+                <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'pause')">Pause</b-btn>
+                <b-btn v-if="item.item.state == 'paused'" size="sm" @click="changeStateAction(item.item, 'resume')">Resume</b-btn>
+                <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'stop')">Stop</b-btn>
+              </template>
+            </b-table>
+            <div class="justify-content-center row my-1">
+              <b-pagination size="md" :total-rows="this.instances.length" :per-page="perPage" v-model="currentPage" />
             </div>
           </div>
         </div>

@@ -113,23 +113,30 @@
       <b-tab title="Tree">
         <div class="row">
           <div class="col-md-3">
-            <tree-view :data="instance" :options=treeOptions></tree-view>
+            <div class="container fill">
+              <inexortree :data=instance :path='getRootPath()' v-on:selectNode="selectNode" class="inexor-tree">
+              </inexortree>
+            </div>
           </div>
           <div class="col-md-9">
             <br />
             <h3>Tree Node</h3>
             <br />
             <div class="form-group">
+              <label>Path</label>
+              <input type="text" class="form-control" v-model="selectedNode.path">
+            </div>
+            <div class="form-group">
               <label>Datatype</label>
-              <input type="text" class="form-control" v-model="instance.name">
+              <input type="text" class="form-control" v-model="selectedNode.datatype">
             </div>
             <div class="form-group">
               <label>Name</label>
-              <input type="text" class="form-control" v-model="instance.name">
+              <input type="text" class="form-control" v-model="selectedNode.name">
             </div>
             <div class="form-group">
               <label>Value</label>
-              <input type="text" class="form-control" v-model="instance.name">
+              <input type="text" class="form-control" v-model="selectedNode.value">
             </div>
           </div>
         </div>
@@ -146,7 +153,7 @@ export default {
   created() {
     this.getCurrentProfile();
     this.getInstance(this.$route.params.instanceId);
-    this.treeOptions.rootObjectKey = `/instances/${this.$route.params.instanceId}`;
+    this.selectedNode.path = `instances.${this.$route.params.instanceId}`;
   },
   methods: {
     getInstance(id) {
@@ -180,13 +187,25 @@ export default {
           this.errors.push(e);
         });
     },
+    getRootPath() {
+      return `instances.${this.$route.params.instanceId}`;
+    },
+    selectNode(path, name, value) {
+      // alert(`${path} ${name} ${value}`);
+      this.selectedNode.datatype = typeof value;
+      this.selectedNode.path = path;
+      this.selectedNode.name = name;
+      this.selectedNode.value = value;
+    },
   },
   data: () => ({
     instance: {},
     currentProfile: '',
-    treeOptions: {
-      maxDepth: 99,
-      rootObjectKey: 'root',
+    selectedNode: {
+      datatype: '',
+      path: '',
+      name: '',
+      value: '',
     },
     states: {
       stopped: {
@@ -245,71 +264,25 @@ export default {
 </script>
 
 <style>
-.tree-view-item {
+.inexor-tree {
+  height: 100%;
+  min-height: 100%;
+  overflow: scroll;
+}
+
+.fill { 
+  min-height: 100%;
+  height: 100%;
+}
+
+.tree-node {
   font-family: monospace;
   font-size: 16px;
-  margin-left: 18px;
 }
 
-.tree-view-wrapper {
-  overflow: auto;
-  margin-top: 20px;
-}
-
-/* Find the first nested node and override the indentation */
-.tree-view-item-root > .tree-view-item-leaf > .tree-view-item {
-  /* margin-left: 40px; */
-}
-
-/* Root node should not be indented */
-.tree-view-item-root {
-  margin-left: 18px;
-}
-
-.tree-view-item-node {
-  cursor: pointer;
-  position: relative;
-  white-space: nowrap;
-}
-
-.tree-view-item-leaf {
-  white-space: nowrap;
-  padding-left: 18px;
-}
-
-/*
-.tree-view-item-key {
-  font-weight: bold;
-  padding-left: 18px;
-}
-
-.tree-view-item-key-with-chevron {
-  padding-left: 14px;
-}
-
-
-.tree-view-item-key-with-chevron.opened::before {
-    top:4px;
-    transform: rotate(90deg);  
-    -webkit-transform: rotate(90deg);
-}
-
-.tree-view-item-key-with-chevron::before {
-    color: #444;
-    content: '\25b6';
-    font-size: 10px;
-    left: 1px;
-    position: absolute;
-    top: 3px;
-    transition: -webkit-transform .1s ease;
-    transition: transform .1s ease;
-    transition: transform .1s ease, -webkit-transform .1s ease;
-    -webkit-transition: -webkit-transform .1s ease;
-}
-*/
-
-.tree-view-item-hint {
-  color: #ccc
+.tree-item {
+  font-family: monospace;
+  font-size: 16px;
 }
 
 </style>
