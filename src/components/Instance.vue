@@ -124,19 +124,30 @@
             <br />
             <div class="form-group">
               <label>Path</label>
-              <input type="text" class="form-control" v-model="selectedNode.path">
+              <input type="text" class="form-control" v-model="selectedNode.path" readonly>
             </div>
             <div class="form-group">
               <label>Datatype</label>
-              <input type="text" class="form-control" v-model="selectedNode.datatype">
+              <input type="text" class="form-control" v-model="selectedNode.datatype" readonly>
             </div>
             <div class="form-group">
               <label>Name</label>
-              <input type="text" class="form-control" v-model="selectedNode.name">
+              <input type="text" class="form-control" v-model="selectedNode.name" readonly>
             </div>
-            <div class="form-group">
+            <div class="form-group" v-if="selectedNode.datatype == 'string'">
               <label>Value</label>
-              <input type="text" class="form-control" v-model="selectedNode.value">
+              <input type="text" class="form-control" v-model="selectedNode.value" v-on:change="updateNode">
+            </div>
+            <div class="form-group" v-if="selectedNode.datatype == 'number'">
+              <label>Value</label>
+              <input type="number" class="form-control" v-model="selectedNode.value" v-on:change="updateNode">
+            </div>
+            <div class="form-group" v-if="selectedNode.datatype == 'boolean'">
+              <input type="checkbox" v-model="selectedNode.value" v-on:change="updateNode">
+            </div>
+            <div class="form-group" v-if="selectedNode.datatype == 'object'">
+              <label>Value</label>
+              <strong>raw js object</strong>
             </div>
           </div>
         </div>
@@ -191,11 +202,23 @@ export default {
       return `instances.${this.$route.params.instanceId}`;
     },
     selectNode(path, name, value) {
-      // alert(`${path} ${name} ${value}`);
       this.selectedNode.datatype = typeof value;
       this.selectedNode.path = path;
       this.selectedNode.name = name;
       this.selectedNode.value = value;
+    },
+    updateNode() {
+      const url = `http://localhost:31416/api/v1/tree/${this.selectedNode.path.replace(/\./g, '/')}`;
+      axios.post(url, {
+        value: this.selectedNode.value,
+        nosync: false,
+      })
+        .then(() => {
+          this.getInstance(this.$route.params.instanceId);
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
     },
   },
   data: () => ({
