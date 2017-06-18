@@ -12,6 +12,22 @@
           </b-form-fieldset>
         </div>
         <b-table striped hover :items="loggers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
+          <template slot="level" scope="item">
+            <div class="btn-group" style="border: 1px solid #cccccc; border-radius: 5px;">
+              <button type="button" class="btn btn-default btn-sm" v-if="item.item.level != 'trace'" @click="setLogLevel(item.item, 'trace')">trace</button>
+              <button type="button" class="btn btn-info btn-sm" v-if="item.item.level == 'trace'">trace</button>
+              <button type="button" class="btn btn-default btn-sm" v-if="item.item.level != 'debug'" @click="setLogLevel(item.item, 'debug')">debug</button>
+              <button type="button" class="btn btn-info btn-sm" v-if="item.item.level == 'debug'">debug</button>
+              <button type="button" class="btn btn-default btn-sm" v-if="item.item.level != 'info'" @click="setLogLevel(item.item, 'info')">info</button>
+              <button type="button" class="btn btn-success btn-sm" v-if="item.item.level == 'info'">info</button>
+              <button type="button" class="btn btn-default btn-sm" v-if="item.item.level != 'warn'" @click="setLogLevel(item.item, 'warn')">warn</button>
+              <button type="button" class="btn btn-warning btn-sm" v-if="item.item.level == 'warn'">warn</button>
+              <button type="button" class="btn btn-default btn-sm" v-if="item.item.level != 'error'" @click="setLogLevel(item.item, 'error')">error</button>
+              <button type="button" class="btn btn-danger btn-sm" v-if="item.item.level == 'error'">error</button>
+              <button type="button" class="btn btn-default btn-sm" v-if="item.item.level != 'fatal'" @click="setLogLevel(item.item, 'fatal')">fatal</button>
+              <button type="button" class="btn btn-danger btn-sm" v-if="item.item.level == 'fatal'">fatal</button>
+            </div>
+          </template>
         </b-table>
         <div class="justify-content-center row my-1">
           <b-pagination size="md" :total-rows="this.loggers.length" :per-page="perPage" v-model="currentPage" />
@@ -45,17 +61,30 @@ export default {
         if (Object.prototype.hasOwnProperty.call(data, 'level')) {
           this.loggers.push({
             name: path,
-            level: data.level,
-            console: data.console,
-            file: data.file,
+            level: (typeof data.level === 'string') ? data.level : '',
+            console: (typeof data.console === 'string') ? data.console : '',
+            file: (typeof data.file === 'string') ? data.file : '',
           });
         }
         const keys = Object.keys(data);
-        console.log(keys);
         for (let i = 0; i < keys.length; i += 1) {
           this.parseLoggers(data[keys[i]], path === '' ? keys[i] : `${path}.${keys[i]}`);
         }
       }
+    },
+    setLogLevel(item, newLevel) {
+      const path = `logging.${item.name}.level`;
+      const url = `http://localhost:31416/api/v1/tree/${path.replace(/\./g, '/')}`;
+      axios.post(url, {
+        value: newLevel,
+        nosync: false,
+      })
+        .then(() => {
+          this.getLoggers();
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
     },
   },
   data: () => ({
@@ -80,7 +109,7 @@ export default {
       },
     },
     currentPage: 1,
-    perPage: 5,
+    perPage: 10,
     filter: null,
   }),
 };
