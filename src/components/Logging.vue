@@ -1,16 +1,88 @@
 <template>
   <div class="logging">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h1>Logging configuration</h1>
+    <b-tabs>
+      <b-tab title="Loggers">
+        <div class="justify-content-center row my-1">
+          <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+            <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
+            </b-form-select>
+          </b-form-fieldset>
+          <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+            <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
+          </b-form-fieldset>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <b-alert variant="danger" show>Not implemented</b-alert>
+        <b-table striped hover :items="loggers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
+        </b-table>
+        <div class="justify-content-center row my-1">
+          <b-pagination size="md" :total-rows="this.loggers.length" :per-page="perPage" v-model="currentPage" />
         </div>
-      </div>
-    </div>
+      </b-tab>
+    </b-tabs>
   </div>
 </template>
+
+<script>
+
+import axios from 'axios';
+
+export default {
+  created() {
+    this.getLoggers();
+  },
+  methods: {
+    getLoggers() {
+      this.loggers = [];
+      axios.get('http://localhost:31416/api/v1/tree/logging/dump')
+        .then((response) => {
+          this.parseLoggers(response.data);
+        })
+        .catch((e) => {
+          this.errors.push(e);
+        });
+    },
+    parseLoggers(data, path = '') {
+      if (typeof data === 'object') {
+        if (Object.prototype.hasOwnProperty.call(data, 'level')) {
+          this.loggers.push({
+            name: path,
+            level: data.level,
+            console: data.console,
+            file: data.file,
+          });
+        }
+        const keys = Object.keys(data);
+        console.log(keys);
+        for (let i = 0; i < keys.length; i += 1) {
+          this.parseLoggers(data[keys[i]], path === '' ? keys[i] : `${path}.${keys[i]}`);
+        }
+      }
+    },
+  },
+  data: () => ({
+    loggers: [],
+    errors: [],
+    fields: {
+      name: {
+        label: 'Name',
+        sortable: true,
+      },
+      level: {
+        label: 'Level',
+        sortable: true,
+      },
+      console: {
+        label: 'Console',
+        sortable: true,
+      },
+      file: {
+        label: 'File',
+        sortable: true,
+      },
+    },
+    currentPage: 1,
+    perPage: 5,
+    filter: null,
+  }),
+};
+</script>
+

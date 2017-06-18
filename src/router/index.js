@@ -7,8 +7,7 @@ import Instance from '@/components/Instance';
 import Media from '@/components/Media';
 import Servers from '@/components/Servers';
 import Interfaces from '@/components/Interfaces';
-// import Logging from '@/components/Logging';
-// import Tree from '@/components/Tree';
+import Logging from '@/components/Logging';
 
 Vue.use(Router);
 
@@ -42,14 +41,10 @@ export default new Router({
       path: '/interfaces',
       name: 'interfaces',
       component: Interfaces,
-//    }, {
-//      path: '/logging',
-//      name: 'Logging',
-//      component: Logging,
-//    }, {
-//      path: '/tree',
-//      name: 'Tree',
-//      component: Tree,
+    }, {
+      path: '/logging',
+      name: 'logging',
+      component: Logging,
     },
   ],
 });
