@@ -28,6 +28,10 @@
               <button type="button" class="btn btn-danger btn-sm" v-if="item.item.level == 'fatal'">fatal</button>
             </div>
           </template>
+          <template slot="console" scope="item">
+            <icon name="check-square-o" v-if="item.item.console"></icon>
+            <icon name="square-o" v-if="!item.item.console"></icon>
+          </template>
         </b-table>
         <div class="justify-content-center row my-1">
           <b-pagination size="md" :total-rows="this.loggers.length" :per-page="perPage" v-model="currentPage" />
@@ -62,7 +66,7 @@ export default {
           this.loggers.push({
             name: path,
             level: (typeof data.level === 'string') ? data.level : '',
-            console: (typeof data.console === 'string') ? data.console : '',
+            console: (typeof data.console === 'boolean') ? data.console : false,
             file: (typeof data.file === 'string') ? data.file : '',
           });
         }
