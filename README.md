@@ -5,8 +5,16 @@
 ## Build Setup
 
 ``` bash
+
+# Install yarn package manager
+sudo -H npm install yarn -g
+
+# Clone repository
+git clone git@github.com:inexorgame/ui-flex.git
+cd ui-flex
+
 # install dependencies
-npm install
+yarn install
 
 # serve with hot reload at localhost:8080
 npm run dev
