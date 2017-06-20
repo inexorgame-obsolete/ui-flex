@@ -4706,6 +4706,12 @@ vue-loader@^12.1.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.2.2"
 
+vue-material@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-0.7.2.tgz#581cb8374b9879bdd724f3ac0c39d1d0a730a644"
+  dependencies:
+    vue "^2.3.3"
+
 vue-router@^2.5.3:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-2.5.3.tgz#073783f564b6aece6c8a59c63e298dc2aabfb51b"

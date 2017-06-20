@@ -10,10 +10,14 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import Icon from 'vue-awesome/components/Icon';
 
+import VueMaterial from 'vue-material';
+import 'vue-material/dist/vue-material.css';
+
 import App from './App';
 import router from './router';
 
 Vue.use(BootstrapVue);
+Vue.use(VueMaterial);
 
 Vue.component('icon', Icon);
 
