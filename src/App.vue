@@ -3,7 +3,7 @@
     <b-navbar toggleable type="inverse" variant="primary">
       <b-nav-toggle target="nav_collapse"></b-nav-toggle>
       <b-link class="navbar-brand" to="/">
-        <img src="./assets/inexor-logo.svg" style="width: 50px; height: 58px;">
+        <img src="../static/img/inexor-logo.svg" style="width: 50px; height: 58px;">
         <span>Inexor Flex</span>
       </b-link>
       <b-collapse is-nav id="nav_collapse">
