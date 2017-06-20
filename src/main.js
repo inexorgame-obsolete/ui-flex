@@ -95,8 +95,3 @@ new Vue({
   components: { App },
   render: h => h(App),
 });
-
-// This is a nice little trick to hack the document base for interfaces
-if (process.node.NODE_ENV === 'production') {
-  document.head.innerHTML += '<base href="/api/v1/interfaces/ui-flex"';
-}
