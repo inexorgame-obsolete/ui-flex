@@ -8,13 +8,8 @@
       </b-link>
       <b-collapse is-nav id="nav_collapse">
         <b-nav is-nav-bar>
-          <b-nav-item to="/profiles">Profiles</b-nav-item>
-          <b-nav-item to="/instances">Instances</b-nav-item>
-          <b-nav-item to="/media">Media</b-nav-item>
-          <!-- TODO: implement server list sync -->
-          <!-- b-nav-item to="/servers">Servers</b-nav-item -->
-          <b-nav-item to="/interfaces">Interfaces</b-nav-item>
-          <b-nav-item to="/logging">Logging</b-nav-item>
+          <b-nav-item></b-nav-item>
+          <b-nav-item v-for="item in navItems" :to="item.route">{{item.label}}</b-nav-item>
         </b-nav>
       </b-collapse>
     </b-navbar>
@@ -25,6 +20,30 @@
 <script>
 export default {
   name: 'app',
+  data: () => ({
+    navItems: [
+      {
+        route: '/profiles',
+        label: 'Profiles',
+      },
+      {
+        route: '/instances',
+        label: 'Instances',
+      },
+      {
+        route: '/media',
+        label: 'Media',
+      },
+      {
+        route: '/interfaces',
+        label: 'Interfaces',
+      },
+      {
+        route: '/logging',
+        label: 'Logging',
+      },
+    ],
+  }),
 };
 </script>
 
@@ -38,9 +57,15 @@ export default {
   margin-top: 0px;
 }
 
+ul:not(.md-list) > li + li {
+  margin-top: 0px;
+}
+
+/*
 .md-list > li, li {
   margin-top: 0px;
 }
+*/
 
 .btn-circle {
   width: 30px;
