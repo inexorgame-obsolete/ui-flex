@@ -9,7 +9,7 @@
       <b-collapse is-nav id="nav_collapse">
         <b-nav is-nav-bar>
           <b-nav-item></b-nav-item>
-          <b-nav-item v-for="item in navItems" :to="item.route">{{item.label}}</b-nav-item>
+          <b-nav-item v-for="item in navItems" :to="item.route" :key="item.label">{{item.label}}</b-nav-item>
         </b-nav>
       </b-collapse>
     </b-navbar>
