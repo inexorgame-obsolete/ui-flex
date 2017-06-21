@@ -12,8 +12,11 @@
           </b-form-fieldset>
         </div>
         <b-table striped hover :items="repositories" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
+          <template slot="branch" scope="item">
+            <b-badge variant="success" v-if="item.item.type == 'git'" style="margin-right: 10px;">{{item.item.branch}} </b-badge>
+          </template>
           <template slot="branches" scope="item">
-            <b-badge variant="primary" v-for="branch, name in item.item.branches" style="margin-right: 10px;">{{name}} </b-badge>
+            <b-badge variant="primary" v-if="item.item.type == 'git'" v-for="branch, name in item.item.branches" :key="name" style="margin-right: 10px;">{{name}}</b-badge>
           </template>
         </b-table>
         <div class="justify-content-center row my-1">
@@ -77,7 +80,7 @@ export default {
         sortable: true,
       },
       path: {
-        label: 'path',
+        label: 'Path',
         sortable: true,
       },
       branch: {
