@@ -37,6 +37,10 @@ export default {
   margin-top: 0px;
 }
 
+.md-list > li, li {
+  margin-top: 0px;
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;
