@@ -11,7 +11,8 @@
           <b-nav-item to="/profiles">Profiles</b-nav-item>
           <b-nav-item to="/instances">Instances</b-nav-item>
           <b-nav-item to="/media">Media</b-nav-item>
-          <b-nav-item to="/servers">Servers</b-nav-item>
+          <!-- TODO: implement server list sync -->
+          <!-- b-nav-item to="/servers">Servers</b-nav-item -->
           <b-nav-item to="/interfaces">Interfaces</b-nav-item>
           <b-nav-item to="/logging">Logging</b-nav-item>
         </b-nav>
