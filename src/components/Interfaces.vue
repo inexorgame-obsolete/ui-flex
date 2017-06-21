@@ -110,7 +110,7 @@ export default {
         label: 'URL',
       },
       repository: {
-        label: 'Repository',
+        label: 'Repository URL',
         sortable: true,
       },
     },
