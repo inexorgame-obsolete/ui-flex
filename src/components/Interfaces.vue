@@ -55,7 +55,6 @@ export default {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getInterface(response.data[i]);
           }
-          console.log(this.interfaces);
         })
         .catch((e) => {
           this.errors.push(e);
