@@ -121,7 +121,7 @@ export default {
   methods: {
     getInstances() {
       this.instances = [];
-      axios.get('http://localhost:31416/api/v1/instances')
+      axios.get('/api/v1/instances')
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getInstance(response.data[i]);
@@ -132,7 +132,7 @@ export default {
         });
     },
     getInstance(id) {
-      const url = `http://localhost:31416/api/v1/instances/${id}/dump`;
+      const url = `/api/v1/instances/${id}/dump`;
       axios.get(url)
         .then((response) => {
           if (response.data !== 0) {
@@ -144,14 +144,14 @@ export default {
         });
     },
     changeStateAction(instance, action) {
-      const url = `http://localhost:31416/api/v1/instances/${instance.port}/${action}`;
+      const url = `/api/v1/instances/${instance.port}/${action}`;
       axios.get(url)
         .then(() => {
           this.getInstances();
         });
     },
     createInstance(id, type, name, description, autostart, autoconnect, autorestart) {
-      const url = `http://localhost:31416/api/v1/instances/${id}`;
+      const url = `/api/v1/instances/${id}`;
       axios.post(url, {
         type,
         name,

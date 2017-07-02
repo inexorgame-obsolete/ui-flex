@@ -72,7 +72,7 @@ export default {
   methods: {
     getRepositories() {
       this.repositories = [];
-      axios.get('http://localhost:31416/api/v1/tree/media/repositories')
+      axios.get('/api/v1/tree/media/repositories')
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getRepository(response.data[i]);
@@ -83,7 +83,7 @@ export default {
         });
     },
     getRepository(name) {
-      axios.get(`http://localhost:31416/api/v1/tree/media/repositories/${name}/dump`)
+      axios.get(`/api/v1/tree/media/repositories/${name}/dump`)
         .then((response) => {
           if (response.data !== 0) {
             this.repositories.push({
@@ -102,7 +102,7 @@ export default {
     },
     getTextures() {
       this.textures = [];
-      axios.get('http://localhost:31416/api/v1/tree/media/textures')
+      axios.get('/api/v1/tree/media/textures')
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getTexturesByAuthor(response.data[i]);
@@ -113,7 +113,7 @@ export default {
         });
     },
     getTexturesByAuthor(author) {
-      axios.get(`http://localhost:31416/api/v1/tree/media/textures/${author}`)
+      axios.get(`/api/v1/tree/media/textures/${author}`)
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getTexturesByAuthorAndName(author, response.data[i]);
@@ -124,7 +124,7 @@ export default {
         });
     },
     getTexturesByAuthorAndName(author, name) {
-      axios.get(`http://localhost:31416/api/v1/tree/media/textures/${author}/${name}`)
+      axios.get(`/api/v1/tree/media/textures/${author}/${name}`)
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getTexturesByAuthorAndNameAndVersion(author, name, response.data[i]);
@@ -135,7 +135,7 @@ export default {
         });
     },
     getTexturesByAuthorAndNameAndVersion(author, name, version) {
-      axios.get(`http://localhost:31416/api/v1/tree/media/textures/${author}/${name}/${version}/dump`)
+      axios.get(`/api/v1/tree/media/textures/${author}/${name}/${version}/dump`)
         .then((response) => {
           if (response.data !== 0) {
             this.textures.push({
@@ -153,7 +153,7 @@ export default {
     },
     getMaps() {
       this.textures = [];
-      axios.get('http://localhost:31416/api/v1/tree/media/maps')
+      axios.get('/api/v1/tree/media/maps')
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getMapsByAuthor(response.data[i]);
@@ -164,7 +164,7 @@ export default {
         });
     },
     getMapsByAuthor(author) {
-      axios.get(`http://localhost:31416/api/v1/tree/media/maps/${author}`)
+      axios.get(`/api/v1/tree/media/maps/${author}`)
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getMapsByAuthorAndName(author, response.data[i]);
@@ -175,7 +175,7 @@ export default {
         });
     },
     getMapsByAuthorAndName(author, name) {
-      axios.get(`http://localhost:31416/api/v1/tree/media/maps/${author}/${name}`)
+      axios.get(`/api/v1/tree/media/maps/${author}/${name}`)
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getMapsByAuthorAndNameAndVersion(author, name, response.data[i]);
@@ -186,7 +186,7 @@ export default {
         });
     },
     getMapsByAuthorAndNameAndVersion(author, name, version) {
-      axios.get(`http://localhost:31416/api/v1/tree/media/maps/${author}/${name}/${version}/dump`)
+      axios.get(`/api/v1/tree/media/maps/${author}/${name}/${version}/dump`)
         .then((response) => {
           if (response.data !== 0) {
             this.maps.push({

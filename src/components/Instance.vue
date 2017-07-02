@@ -168,7 +168,7 @@ export default {
   },
   methods: {
     getInstance(id) {
-      const url = `http://localhost:31416/api/v1/instances/${id}/dump`;
+      const url = `/api/v1/instances/${id}/dump`;
       axios.get(url)
         .then((response) => {
           if (response.data !== 0) {
@@ -183,14 +183,14 @@ export default {
       alert('Not implemented');
     },
     changeStateAction(instance, action) {
-      const url = `http://localhost:31416/api/v1/instances/${instance.port}/${action}`;
+      const url = `/api/v1/instances/${instance.port}/${action}`;
       axios.get(url)
         .then(() => {
           this.getInstance(this.$route.params.instanceId);
         });
     },
     getCurrentProfile() {
-      axios.get('http://localhost:31416/api/v1/tree/profiles/current')
+      axios.get('/api/v1/tree/profiles/current')
         .then((response) => {
           this.currentProfile = response.data;
         })
@@ -208,7 +208,7 @@ export default {
       this.selectedNode.value = value;
     },
     updateNode() {
-      const url = `http://localhost:31416/api/v1/tree/${this.selectedNode.path.replace(/\./g, '/')}`;
+      const url = `/api/v1/tree/${this.selectedNode.path.replace(/\./g, '/')}`;
       axios.post(url, {
         value: this.selectedNode.value,
         nosync: false,

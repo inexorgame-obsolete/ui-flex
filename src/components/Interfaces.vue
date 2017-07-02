@@ -50,7 +50,7 @@ export default {
   methods: {
     getInterfaces() {
       this.loggers = [];
-      axios.get('http://localhost:31416/api/v1/tree/interfaces')
+      axios.get('/api/v1/tree/interfaces')
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getInterface(response.data[i]);
@@ -61,7 +61,7 @@ export default {
         });
     },
     getInterface(name) {
-      axios.get(`http://localhost:31416/api/v1/tree/interfaces/${name}/dump`)
+      axios.get(`/api/v1/tree/interfaces/${name}/dump`)
         .then((response) => {
           if (response.data !== 0) {
             this.interfaces.push({

@@ -52,7 +52,7 @@ export default {
   methods: {
     getLoggers() {
       this.loggers = [];
-      axios.get('http://localhost:31416/api/v1/tree/logging/dump')
+      axios.get('/api/v1/tree/logging/dump')
         .then((response) => {
           this.parseLoggers(response.data);
         })
@@ -78,7 +78,7 @@ export default {
     },
     setLogLevel(item, newLevel) {
       const path = `logging.${item.name}.level`;
-      const url = `http://localhost:31416/api/v1/tree/${path.replace(/\./g, '/')}`;
+      const url = `/api/v1/tree/${path.replace(/\./g, '/')}`;
       axios.post(url, {
         value: newLevel,
         nosync: false,

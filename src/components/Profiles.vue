@@ -101,7 +101,7 @@ export default {
   methods: {
     getProfiles() {
       this.profiles = [];
-      axios.get('http://localhost:31416/api/v1/profiles')
+      axios.get('/api/v1/profiles')
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getProfile(response.data[i]);
@@ -112,7 +112,7 @@ export default {
         });
     },
     getProfile(name) {
-      const url = `http://localhost:31416/api/v1/profiles/${name}`;
+      const url = `/api/v1/profiles/${name}`;
       axios.get(url)
         .then((response) => {
           if (response.data !== 0) {
@@ -124,7 +124,7 @@ export default {
         });
     },
     getDefaultProfile() {
-      axios.get('http://localhost:31416/api/v1/tree/profiles/default')
+      axios.get('/api/v1/tree/profiles/default')
         .then((response) => {
           this.defaultProfile = response.data;
         })
@@ -133,7 +133,7 @@ export default {
         });
     },
     getCurrentProfile() {
-      axios.get('http://localhost:31416/api/v1/tree/profiles/current')
+      axios.get('/api/v1/tree/profiles/current')
         .then((response) => {
           this.currentProfile = response.data;
         })
@@ -142,7 +142,7 @@ export default {
         });
     },
     createProfile(name, hostname, port) {
-      const url = `http://localhost:31416/api/v1/profiles/${name}`;
+      const url = `/api/v1/profiles/${name}`;
       axios.post(url, {
         name,
         hostname,
@@ -156,7 +156,7 @@ export default {
         });
     },
     removeProfile(profile) {
-      const url = `http://localhost:31416/api/v1/profiles/${profile.name}`;
+      const url = `/api/v1/profiles/${profile.name}`;
       axios.delete(url)
         .then(() => {
           this.getProfiles();
@@ -166,7 +166,7 @@ export default {
         });
     },
     switchToProfile(profile) {
-      const url = `http://localhost:31416/api/v1/profiles/${profile.name}/switch`;
+      const url = `/api/v1/profiles/${profile.name}/switch`;
       axios.get(url)
         .then(() => {
         })
@@ -175,7 +175,7 @@ export default {
         });
     },
     shutdown() {
-      axios.get('http://localhost:31416/api/v1/flex/shutdown')
+      axios.get('/api/v1/flex/shutdown')
         .then(() => {
         })
         .catch((e) => {
