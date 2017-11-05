@@ -14,7 +14,7 @@
         <b-table striped hover :items="releases" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
         </b-table>
         <div class="justify-content-center row my-1">
-          <b-pagination size="md" :total-rows="this.interfaces.length" :per-page="perPage" v-model="currentPage" />
+          <b-pagination size="md" :total-rows="this.releases.length" :per-page="perPage" v-model="currentPage" />
         </div>
       </b-tab>
     </b-tabs>
