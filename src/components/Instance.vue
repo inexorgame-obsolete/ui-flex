@@ -180,6 +180,7 @@ export default {
         });
     },
     saveInstance() {
+      // eslint-disable-next-line
       alert('Not implemented');
     },
     changeStateAction(instance, action) {
