@@ -12,10 +12,10 @@
           </b-form-fieldset>
         </div>
         <b-table striped hover :items="repositories" :fields="repositoriesFields" :current-page="repositoriesCurrentPage" :per-page="repositoriesPerPage" :filter="repositoriesFilter">
-          <template slot="branch" slot-scope="item">
+          <template slot="branch" scope="item">
             <b-badge variant="success" v-if="item.item.type == 'git'" style="margin-right: 10px;">{{item.item.branch}} </b-badge>
           </template>
-          <template slot="branches" slot-scope="item">
+          <template slot="branches" scope="item">
             <b-badge variant="primary" v-if="item.item.type == 'git'" v-for="branch, name in item.item.branches" :key="name" style="margin-right: 10px;">{{name}}</b-badge>
           </template>
         </b-table>

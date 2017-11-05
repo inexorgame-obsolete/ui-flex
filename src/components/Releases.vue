@@ -12,6 +12,15 @@
           </b-form-fieldset>
         </div>
         <b-table striped hover :items="releases" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
+          <template slot="progressBar" scope="item">
+            <loading-progress
+              :progress="item.item.progress"
+              shape="line"
+              size="64"
+            />
+            <br />
+            {{Math.floor(item.item.progress * 100)}} %
+          </template>
         </b-table>
         <div class="justify-content-center row my-1">
           <b-pagination size="md" :total-rows="this.releases.length" :per-page="perPage" v-model="currentPage" />
@@ -57,12 +66,15 @@ export default {
       axios.get(`/api/v1/tree/releases/channels/${channel}/${version}/dump`)
         .then((response) => {
           if (response.data !== 0) {
+            const progress = response.data.fileSize > 0 ?
+                (response.data.fileSizeDownloaded / response.data.fileSize) : 0;
             this.releases.push({
               version: response.data.version,
               channel: response.data.channel,
               path: response.data.path,
               fileSize: response.data.fileSize,
               fileSizeDownloaded: response.data.fileSizeDownloaded,
+              progress,
               name: response.data.name,
               provider: response.data.provider,
               isDownloaded: response.data.isDownloaded,
@@ -89,6 +101,20 @@ export default {
         label: 'Version',
         sortable: true,
       },
+      createdAt: {
+        label: 'Release Date',
+        sortable: true,
+      },
+      fileSize: {
+        label: 'File Size',
+        sortable: true,
+      },
+      fileSizeDownloaded: {
+        label: 'Downloaded ',
+      },
+      progressBar: {
+        label: 'Progress',
+      },
       isDownloaded: {
         label: 'Downloaded',
         sortable: true,
@@ -99,14 +125,6 @@ export default {
       },
       preRelease: {
         label: 'Pre Release',
-        sortable: true,
-      },
-      createdAt: {
-        label: 'Release Date',
-        sortable: true,
-      },
-      fileSize: {
-        label: 'File Size',
         sortable: true,
       },
     },
