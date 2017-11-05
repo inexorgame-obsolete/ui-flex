@@ -39,6 +39,10 @@ export default {
         label: 'Interfaces',
       },
       {
+        route: '/releases',
+        label: 'Releases',
+      },
+      {
         route: '/logging',
         label: 'Logging',
       },
