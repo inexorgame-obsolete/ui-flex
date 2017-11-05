@@ -54,7 +54,7 @@ export default {
         });
     },
     getVersion(channel, version) {
-      axios.get(`/api/v1/tree/releases/channels/${channel}/${version}`)
+      axios.get(`/api/v1/tree/releases/channels/${channel}/${version}/dump`)
         .then((response) => {
           if (response.data !== 0) {
             this.releases.push({
