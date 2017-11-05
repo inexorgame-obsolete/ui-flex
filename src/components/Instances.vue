@@ -23,15 +23,15 @@
               :per-page="perPage"
               :filter="filter"
               @row-clicked="selectInstance">
-              <template slot="port" scope="item">
+              <template slot="port" slot-scope="item">
                 <strong>{{item.item.port}}</strong>
               </template>
-              <template slot="name" scope="item">
+              <template slot="name" slot-scope="item">
                 <strong>{{item.item.name}}</strong>
                 <br />
                 {{item.item.description}}
               </template>
-              <template slot="actions" scope="item">
+              <template slot="actions" slot-scope="item">
                 <b-btn v-if="item.item.state == 'stopped'" size="sm" @click="changeStateAction(item.item, 'start')">Start</b-btn>
                 <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'connect')">Connect</b-btn>
                 <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'disconnect')">Disconnect</b-btn>

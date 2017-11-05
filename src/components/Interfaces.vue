@@ -12,20 +12,20 @@
           </b-form-fieldset>
         </div>
         <b-table striped hover :items="interfaces" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
-          <template slot="enabled" scope="item">
+          <template slot="enabled" slot-scope="item">
             <b-badge variant="success" v-if="item.item.enabled === true">Enabled</b-badge>
           </template>
-          <template slot="name" scope="item">
+          <template slot="name" slot-scope="item">
             <strong>{{item.item.name}}</strong>
             <br />
             {{item.item.description}}
           </template>
-          <template slot="fsPath" scope="item">
+          <template slot="fsPath" slot-scope="item">
             <strong>rel:</strong> {{item.item.relativeFsPath}}
             <br />
             <strong>abs:</strong> {{item.item.absoluteFsPath}}
           </template>
-          <template slot="url" scope="item">
+          <template slot="url" slot-scope="item">
             <strong>rel:</strong> {{item.item.relativeUrl}}
             <br />
             <strong>full:</strong> <a :href=item.item.fullUrl target="_blank">{{item.item.fullUrl}}</a>
