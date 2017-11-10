@@ -9,6 +9,7 @@ import Servers from '@/components/Servers';
 import Interfaces from '@/components/Interfaces';
 import Releases from '@/components/Releases';
 import Logging from '@/components/Logging';
+import Info from '@/components/Info';
 
 Vue.use(Router);
 
@@ -50,6 +51,10 @@ export default new Router({
       path: '/logging',
       name: 'logging',
       component: Logging,
+    }, {
+      path: '/info',
+      name: 'info',
+      component: Info,
     },
   ],
 });

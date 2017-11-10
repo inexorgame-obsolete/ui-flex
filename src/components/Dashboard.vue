@@ -20,7 +20,7 @@
               <div class="md-subhead">Servers and clients</div>
             </md-card-header>
             <md-card-content>
-              Here you can configure, start and stop servers and clients. Also you can navigate through their configuration trees or send commands to. 
+              Here you can configure, start and stop servers and clients. Also you can navigate through their configuration trees or send commands to.
             </md-card-content>
           </md-card>
         </div>
@@ -56,6 +56,17 @@
             </md-card-header>
             <md-card-content>
               Here you add and update the user interfaces like the HUD or a third party admin panel.
+            </md-card-content>
+          </md-card>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <md-card md-with-hover>
+            <md-card-header>
+              <div class="md-title"><a href="#/info" target="_blank">Information</a></div>
+              <div class="md-subhead">Information about the server.</div>
+            </md-card-header>
+            <md-card-content>
+              You can find system information and logs here.
             </md-card-content>
           </md-card>
         </div>

@@ -46,6 +46,10 @@ export default {
         route: '/logging',
         label: 'Logging',
       },
+      {
+        route: '/info',
+        label: 'Information',
+      },
     ],
   }),
 };
@@ -110,11 +114,11 @@ ul:not(.md-list) > li + li {
   color: #000;
   background: #ff0000;
 }
-.navbar-default .navbar-nav > .active > a, 
-.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #000;
   background: #d65c14;
 }
- 
+
 </style>
