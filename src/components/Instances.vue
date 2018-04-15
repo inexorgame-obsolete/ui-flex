@@ -145,7 +145,7 @@ export default {
         });
     },
     changeStateAction(instance, action) {
-      const url = `${this.flexHost()}/${instance.port}/${action}`;
+      const url = `${this.flexHost()}/api/v1/instances/${instance.port}/${action}`;
       axios.get(url)
         .then(() => {
           this.getInstances();
