@@ -3,11 +3,11 @@
     <b-tabs>
       <b-tab title="Loggers">
         <div class="justify-content-center row my-1">
-          <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+          <b-form-fieldset horizontal label="Rows per page" class="col-6">
             <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
             </b-form-select>
           </b-form-fieldset>
-          <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+          <b-form-fieldset horizontal label="Filter" class="col-6">
             <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
           </b-form-fieldset>
         </div>
@@ -52,13 +52,13 @@ export default {
   methods: {
     getLoggers() {
       this.loggers = [];
-      axios.get('/api/v1/tree/logging/dump')
-        .then((response) => {
-          this.parseLoggers(response.data);
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/logging/dump`;
+      axios.get(url).then((response) => {
+        this.parseLoggers(response.data);
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     parseLoggers(data, path = '') {
       if (typeof data === 'object') {
@@ -78,7 +78,7 @@ export default {
     },
     setLogLevel(item, newLevel) {
       const path = `logging.${item.name}.level`;
-      const url = `/api/v1/tree/${path.replace(/\./g, '/')}`;
+      const url = `${this.flexHost()}/api/v1/tree/${path.replace(/\./g, '/')}`;
       axios.post(url, {
         value: newLevel,
         nosync: false,
@@ -118,4 +118,3 @@ export default {
   }),
 };
 </script>
-

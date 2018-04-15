@@ -41,19 +41,22 @@ import axios from 'axios';
 
 export default {
   created() {
-    axios.get('/api/v1/flex/version').then((response) => {
+    let url = `${this.flexHost()}/api/v1/flex/version`;
+    axios.get(url).then((response) => {
       this.version = response.data.version;
     }).catch((e) => {
       this.errors.push(e);
     });
 
-    axios.get('/api/v1/flex/sysinfo').then((response) => {
+    url = `${this.flexHost()}/api/v1/flex/sysinfo`;
+    axios.get(url).then((response) => {
       this.sysinfo = response.data;
     }).catch((e) => {
       this.errors.push(e);
     });
 
-    axios.get(`/api/v1/flex/log/${this.log.name}`).then((response) => {
+    url = `${this.flexHost()}/api/v1/flex/log/${this.log.name}`;
+    axios.get(url).then((response) => {
       this.log.content = response.data;
     }).catch((e) => {
       this.errors.push(e);

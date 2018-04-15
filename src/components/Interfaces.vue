@@ -3,11 +3,11 @@
     <b-tabs>
       <b-tab title="User Interfaces">
         <div class="justify-content-center row my-1">
-          <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+          <b-form-fieldset horizontal label="Rows per page" class="col-6">
             <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
             </b-form-select>
           </b-form-fieldset>
-          <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+          <b-form-fieldset horizontal label="Filter" class="col-6">
             <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
           </b-form-fieldset>
         </div>
@@ -50,7 +50,8 @@ export default {
   methods: {
     getInterfaces() {
       this.loggers = [];
-      axios.get('/api/v1/tree/interfaces')
+      const url = `${this.flexHost()}/api/v1/tree/interfaces`;
+      axios.get(url)
         .then((response) => {
           for (let i = 0; i < response.data.length; i += 1) {
             this.getInterface(response.data[i]);
@@ -61,7 +62,8 @@ export default {
         });
     },
     getInterface(name) {
-      axios.get(`/api/v1/tree/interfaces/${name}/dump`)
+      const url = `${this.flexHost()}/api/v1/tree/interfaces/${name}/dump`;
+      axios.get(url)
         .then((response) => {
           if (response.data !== 0) {
             this.interfaces.push({
@@ -120,4 +122,3 @@ export default {
   }),
 };
 </script>
-

@@ -3,11 +3,11 @@
     <b-tabs>
       <b-tab title="Profiles">
         <div class="justify-content-center row my-1">
-          <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+          <b-form-fieldset horizontal label="Rows per page" class="col-6">
             <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
             </b-form-select>
           </b-form-fieldset>
-          <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+          <b-form-fieldset horizontal label="Filter" class="col-6">
             <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
           </b-form-fieldset>
         </div>
@@ -101,86 +101,85 @@ export default {
   methods: {
     getProfiles() {
       this.profiles = [];
-      axios.get('/api/v1/profiles')
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getProfile(response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/profiles`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getProfile(response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getProfile(name) {
-      const url = `/api/v1/profiles/${name}`;
-      axios.get(url)
-        .then((response) => {
-          if (response.data !== 0) {
-            this.profiles.push({ name, profile: response.data });
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/profiles/${name}`;
+      axios.get(url).then((response) => {
+        if (response.data !== 0) {
+          this.profiles.push({ name, profile: response.data });
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getDefaultProfile() {
-      axios.get('/api/v1/tree/profiles/default')
-        .then((response) => {
-          this.defaultProfile = response.data;
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/profiles/default`;
+      axios.get(url).then((response) => {
+        this.defaultProfile = response.data;
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getCurrentProfile() {
-      axios.get('/api/v1/tree/profiles/current')
-        .then((response) => {
-          this.currentProfile = response.data;
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/profiles/current`;
+      axios.get(url).then((response) => {
+        this.currentProfile = response.data;
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     createProfile(name, hostname, port) {
-      const url = `/api/v1/profiles/${name}`;
+      const url = `${this.flexHost()}/api/v1/profiles/${name}`;
       axios.post(url, {
         name,
         hostname,
         port,
       })
-        .then(() => {
-          this.getProfiles();
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      .then(() => {
+        this.getProfiles();
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     removeProfile(profile) {
-      const url = `/api/v1/profiles/${profile.name}`;
+      const url = `${this.flexHost()}/api/v1/profiles/${profile.name}`;
       axios.delete(url)
-        .then(() => {
-          this.getProfiles();
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      .then(() => {
+        this.getProfiles();
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     switchToProfile(profile) {
-      const url = `/api/v1/profiles/${profile.name}/switch`;
+      const url = `${this.flexHost()}/api/v1/profiles/${profile.name}/switch`;
       axios.get(url)
-        .then(() => {
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      .then(() => {
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     shutdown() {
-      axios.get('/api/v1/flex/shutdown')
-        .then(() => {
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/flex/shutdown`;
+      axios.get(url).then(() => {
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
   },
   data: () => ({

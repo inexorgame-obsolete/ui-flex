@@ -168,7 +168,7 @@ export default {
   },
   methods: {
     getInstance(id) {
-      const url = `/api/v1/instances/${id}/dump`;
+      const url = `${this.flexHost()}/api/v1/instances/${id}/dump`;
       axios.get(url)
         .then((response) => {
           if (response.data !== 0) {
@@ -184,14 +184,15 @@ export default {
       alert('Not implemented');
     },
     changeStateAction(instance, action) {
-      const url = `/api/v1/instances/${instance.port}/${action}`;
+      const url = `${this.flexHost()}/api/v1/instances/${instance.port}/${action}`;
       axios.get(url)
         .then(() => {
           this.getInstance(this.$route.params.instanceId);
         });
     },
     getCurrentProfile() {
-      axios.get('/api/v1/tree/profiles/current')
+      const url = `${this.flexHost()}/api/v1/tree/profiles/current`;
+      axios.get(url)
         .then((response) => {
           this.currentProfile = response.data;
         })
@@ -209,7 +210,7 @@ export default {
       this.selectedNode.value = value;
     },
     updateNode() {
-      const url = `/api/v1/tree/${this.selectedNode.path.replace(/\./g, '/')}`;
+      const url = `${this.flexHost()}/api/v1/tree/${this.selectedNode.path.replace(/\./g, '/')}`;
       axios.post(url, {
         value: this.selectedNode.value,
         nosync: false,
@@ -289,7 +290,7 @@ export default {
 
 <style>
 
-.fill { 
+.fill {
   min-height: 100%;
   height: 100%;
 }
@@ -330,4 +331,3 @@ export default {
 }
 
 </style>
-

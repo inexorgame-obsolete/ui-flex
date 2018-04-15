@@ -3,11 +3,11 @@
     <b-tabs>
       <b-tab title="Releases">
         <div class="justify-content-center row my-1">
-          <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+          <b-form-fieldset horizontal label="Rows per page" class="col-6">
             <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
             </b-form-select>
           </b-form-fieldset>
-          <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+          <b-form-fieldset horizontal label="Filter" class="col-6">
             <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
           </b-form-fieldset>
         </div>
@@ -41,52 +41,52 @@ export default {
   methods: {
     getChannels() {
       this.releases = [];
-      axios.get('/api/v1/tree/releases/channels')
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getVersions(response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/releases/channels`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getVersions(response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getVersions(channel) {
-      axios.get(`/api/v1/tree/releases/channels/${channel}`)
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getVersion(channel, response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/releases/channels/${channel}`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getVersion(channel, response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getVersion(channel, version) {
-      axios.get(`/api/v1/tree/releases/channels/${channel}/${version}/dump`)
-        .then((response) => {
-          if (response.data !== 0) {
-            const progress = response.data.fileSize > 0 ?
-                (response.data.fileSizeDownloaded / response.data.fileSize) : 0;
-            this.releases.push({
-              version: response.data.version,
-              channel: response.data.channel,
-              path: response.data.path,
-              fileSize: response.data.fileSize,
-              fileSizeDownloaded: response.data.fileSizeDownloaded,
-              progress,
-              name: response.data.name,
-              provider: response.data.provider,
-              isDownloaded: response.data.isDownloaded,
-              isInstalled: response.data.isInstalled,
-              preRelease: response.data.preRelease,
-              createdAt: response.data.createdAt,
-            });
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/releases/channels/${channel}/${version}/dump`;
+      axios.get(url).then((response) => {
+        if (response.data !== 0) {
+          const progress = response.data.fileSize > 0 ?
+              (response.data.fileSizeDownloaded / response.data.fileSize) : 0;
+          this.releases.push({
+            version: response.data.version,
+            channel: response.data.channel,
+            path: response.data.path,
+            fileSize: response.data.fileSize,
+            fileSizeDownloaded: response.data.fileSizeDownloaded,
+            progress,
+            name: response.data.name,
+            provider: response.data.provider,
+            isDownloaded: response.data.isDownloaded,
+            isInstalled: response.data.isInstalled,
+            preRelease: response.data.preRelease,
+            createdAt: response.data.createdAt,
+          });
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
   },
   data: () => ({
@@ -134,4 +134,3 @@ export default {
   }),
 };
 </script>
-

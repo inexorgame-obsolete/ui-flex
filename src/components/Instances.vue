@@ -6,11 +6,11 @@
         <div class="row">
           <div class="col-sm-12 col-md-12">
             <div class="justify-content-center row my-1">
-              <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+              <b-form-fieldset horizontal label="Rows per page" class="col-6">
                 <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="perPage">
                 </b-form-select>
               </b-form-fieldset>
-              <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+              <b-form-fieldset horizontal label="Filter" class="col-6">
                 <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
               </b-form-fieldset>
             </div>
@@ -121,8 +121,10 @@ export default {
   methods: {
     getInstances() {
       this.instances = [];
-      axios.get('/api/v1/instances')
+      const url = `${this.flexHost()}/api/v1/instances`;
+      axios.get(url)
         .then((response) => {
+          console.log(response);
           for (let i = 0; i < response.data.length; i += 1) {
             this.getInstance(response.data[i]);
           }
@@ -132,9 +134,10 @@ export default {
         });
     },
     getInstance(id) {
-      const url = `/api/v1/instances/${id}/dump`;
+      const url = `${this.flexHost()}/api/v1/instances/${id}/dump`;
       axios.get(url)
         .then((response) => {
+          console.log(response);
           if (response.data !== 0) {
             this.instances.push(response.data);
           }
@@ -144,14 +147,14 @@ export default {
         });
     },
     changeStateAction(instance, action) {
-      const url = `/api/v1/instances/${instance.port}/${action}`;
+      const url = `${this.flexHost()}/${instance.port}/${action}`;
       axios.get(url)
         .then(() => {
           this.getInstances();
         });
     },
     createInstance(id, type, name, description, autostart, autoconnect, autorestart) {
-      const url = `/api/v1/instances/${id}`;
+      const url = `${this.flexHost()}/api/v1/instances/${id}`;
       axios.post(url, {
         type,
         name,

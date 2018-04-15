@@ -3,11 +3,11 @@
     <b-tabs>
       <b-tab title="Media Repositories">
         <div class="justify-content-center row">
-          <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+          <b-form-fieldset horizontal label="Rows per page" class="col-6">
             <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="repositoriesPerPage">
             </b-form-select>
           </b-form-fieldset>
-          <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+          <b-form-fieldset horizontal label="Filter" class="col-6">
             <b-form-input v-model="repositoriesFilter" placeholder="Type to Search"></b-form-input>
           </b-form-fieldset>
         </div>
@@ -25,11 +25,11 @@
       </b-tab>
       <b-tab title="Textures">
         <div class="justify-content-center row">
-          <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+          <b-form-fieldset horizontal label="Rows per page" class="col-6">
             <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="texturesPerPage">
             </b-form-select>
           </b-form-fieldset>
-          <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+          <b-form-fieldset horizontal label="Filter" class="col-6">
             <b-form-input v-model="texturesFilter" placeholder="Type to Search"></b-form-input>
           </b-form-fieldset>
         </div>
@@ -41,11 +41,11 @@
       </b-tab>
       <b-tab title="Maps">
         <div class="justify-content-center row">
-          <b-form-fieldset horizontal label="Rows per page" class="col-6" :label-size="6">
+          <b-form-fieldset horizontal label="Rows per page" class="col-6">
             <b-form-select :options="[{text:5,value:5},{text:10,value:10},{text:15,value:15}]" v-model="mapsPerPage">
             </b-form-select>
           </b-form-fieldset>
-          <b-form-fieldset horizontal label="Filter" class="col-6" :label-size="2">
+          <b-form-fieldset horizontal label="Filter" class="col-6">
             <b-form-input v-model="mapsFilter" placeholder="Type to Search"></b-form-input>
           </b-form-fieldset>
         </div>
@@ -72,136 +72,136 @@ export default {
   methods: {
     getRepositories() {
       this.repositories = [];
-      axios.get('/api/v1/tree/media/repositories')
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getRepository(response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/repositories`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getRepository(response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getRepository(name) {
-      axios.get(`/api/v1/tree/media/repositories/${name}/dump`)
-        .then((response) => {
-          if (response.data !== 0) {
-            this.repositories.push({
-              name,
-              type: response.data.type,
-              path: response.data.path,
-              url: response.data.url,
-              branch: response.data.branch,
-              branches: response.data.branches,
-            });
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/repositories/${name}/dump`;
+      axios.get(url).then((response) => {
+        if (response.data !== 0) {
+          this.repositories.push({
+            name,
+            type: response.data.type,
+            path: response.data.path,
+            url: response.data.url,
+            branch: response.data.branch,
+            branches: response.data.branches,
+          });
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getTextures() {
       this.textures = [];
-      axios.get('/api/v1/tree/media/textures')
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getTexturesByAuthor(response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/textures`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getTexturesByAuthor(response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getTexturesByAuthor(author) {
-      axios.get(`/api/v1/tree/media/textures/${author}`)
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getTexturesByAuthorAndName(author, response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/textures/${author}`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getTexturesByAuthorAndName(author, response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getTexturesByAuthorAndName(author, name) {
-      axios.get(`/api/v1/tree/media/textures/${author}/${name}`)
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getTexturesByAuthorAndNameAndVersion(author, name, response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/textures/${author}/${name}`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getTexturesByAuthorAndNameAndVersion(author, name, response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getTexturesByAuthorAndNameAndVersion(author, name, version) {
-      axios.get(`/api/v1/tree/media/textures/${author}/${name}/${version}/dump`)
-        .then((response) => {
-          if (response.data !== 0) {
-            this.textures.push({
-              author,
-              name,
-              version,
-              diffuse: response.data.diffuse,
-              depth: response.data.depth,
-            });
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/textures/${author}/${name}/${version}/dump`;
+      axios.get(url).then((response) => {
+        if (response.data !== 0) {
+          this.textures.push({
+            author,
+            name,
+            version,
+            diffuse: response.data.diffuse,
+            depth: response.data.depth,
+          });
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getMaps() {
       this.textures = [];
-      axios.get('/api/v1/tree/media/maps')
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getMapsByAuthor(response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/maps`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getMapsByAuthor(response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getMapsByAuthor(author) {
-      axios.get(`/api/v1/tree/media/maps/${author}`)
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getMapsByAuthorAndName(author, response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/maps/${author}`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getMapsByAuthorAndName(author, response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getMapsByAuthorAndName(author, name) {
-      axios.get(`/api/v1/tree/media/maps/${author}/${name}`)
-        .then((response) => {
-          for (let i = 0; i < response.data.length; i += 1) {
-            this.getMapsByAuthorAndNameAndVersion(author, name, response.data[i]);
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/maps/${author}/${name}`;
+      axios.get(url).then((response) => {
+        for (let i = 0; i < response.data.length; i += 1) {
+          this.getMapsByAuthorAndNameAndVersion(author, name, response.data[i]);
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
     getMapsByAuthorAndNameAndVersion(author, name, version) {
-      axios.get(`/api/v1/tree/media/maps/${author}/${name}/${version}/dump`)
-        .then((response) => {
-          if (response.data !== 0) {
-            this.maps.push({
-              author,
-              name,
-              version,
-              octree: response.data.octree,
-              waypoints: response.data.waypoints,
-              config: response.data.config,
-            });
-          }
-        })
-        .catch((e) => {
-          this.errors.push(e);
-        });
+      const url = `${this.flexHost()}/api/v1/tree/media/maps/${author}/${name}/${version}/dump`;
+      axios.get(url).then((response) => {
+        if (response.data !== 0) {
+          this.maps.push({
+            author,
+            name,
+            version,
+            octree: response.data.octree,
+            waypoints: response.data.waypoints,
+            config: response.data.config,
+          });
+        }
+      })
+      .catch((e) => {
+        this.errors.push(e);
+      });
     },
   },
   data: () => ({

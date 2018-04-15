@@ -24,7 +24,13 @@ Vue.use(VueMaterial);
 Vue.use(VueProgress);
 
 Vue.component('icon', Icon);
+const FLEX_HOST = (new URL(document.location)).searchParams.get('flexHost');
 
+Vue.mixin({
+  methods: {
+    flexHost: () => FLEX_HOST,
+  },
+});
 
 Vue.component('inexortree', {
   template: `
