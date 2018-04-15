@@ -124,7 +124,6 @@ export default {
       const url = `${this.flexHost()}/api/v1/instances`;
       axios.get(url)
         .then((response) => {
-          console.log(response);
           for (let i = 0; i < response.data.length; i += 1) {
             this.getInstance(response.data[i]);
           }
@@ -137,7 +136,6 @@ export default {
       const url = `${this.flexHost()}/api/v1/instances/${id}/dump`;
       axios.get(url)
         .then((response) => {
-          console.log(response);
           if (response.data !== 0) {
             this.instances.push(response.data);
           }

@@ -24,7 +24,7 @@ Vue.use(VueMaterial);
 Vue.use(VueProgress);
 
 Vue.component('icon', Icon);
-const FLEX_HOST = (new URL(document.location)).searchParams.get('flexHost');
+const FLEX_HOST = (new URL(document.location)).searchParams.get('flexHost') ? (new URL(document.location)).searchParams.get('flexHost') : '';
 
 Vue.mixin({
   methods: {
