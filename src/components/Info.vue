@@ -1,38 +1,33 @@
 <template>
-  <div class="info">
-    <b-tabs>
-      <b-tab title="Configuration">
-        <div class="card">
-          <div class="card-header">System information</div>
-          <div class="card-body">
-            <b-list-group>
-              <b-list-group-item class="col-md-12">
-                <strong>Flex version: </strong> {{ version }}
-              </b-list-group-item>
-              <b-list-group-item class="col-md-12">
-                <strong>Platform: </strong> {{ sysinfo.platform }}
-              </b-list-group-item>
-              <b-list-group-item class="col-md-12">
-                <strong>Platform release: </strong> {{ sysinfo.release }}
-              </b-list-group-item>
-            </b-list-group>
-          </div>
+  <div class="row p-3">
+    <div class="col col-md-6 pr-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">System Information</h5>
+          <dl class="row">
+            <dt class="col-sm-3">Flex version</dt>
+            <dd class="col-sm-9"><code>{{ version }}</code></dd>
+            <dt class="col-sm-3">Platform</dt>
+            <dd class="col-sm-9"><code>{{ sysinfo.platform }}</code></dd>
+            <dt class="col-sm-3">Release</dt>
+            <dd class="col-sm-9"><code>{{ sysinfo.release }}</code></dd>
+          </dl>
         </div>
-        <div class="card">
-          <div class="card-header">Paths</div>
-          <div class="card-body">
-            <b-list-group>
-              <b-list-group-item v-for="path in Object.entries(sysinfo.paths)" class="col-md-12">
-                <strong>{{ path[0] }}: </strong> {{ path[1] }}
-              </b-list-group-item>
-            </b-list-group>
-          </div>
+      </div>
+    </div>
+    <div class="col col-md-6 pl-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Paths</h5>
+          <dl class="row">
+            <template v-for="path in Object.entries(sysinfo.paths)">
+              <dt class="col-sm-3">{{ path[0] }}</dt>
+              <dd class="col-sm-9"><code>{{ path[1] }}</code></dd>
+            </template>
+          </dl>
         </div>
-      </b-tab>
-      <b-tab title="Log">
-        <b-table striped hover :items="log.content" :fields="fields"></b-table>
-      </b-tab>
-    </b-tabs>
+      </div>
+    </div>
   </div>
 </template>
 

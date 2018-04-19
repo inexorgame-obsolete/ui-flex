@@ -1,0 +1,46 @@
+body {
+  overflow-y: scroll;
+}
+.overlay-warning {
+  z-index: 1080;
+  background: rgba(30, 0, 0, .8);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+.form-fullsize, .btn-fullsize {
+  border-right: none;
+  border-left: none;
+  border-radius: 0;
+}
+.dataTable .sorting::before, .dataTable .sorting_asc::before {
+  content: "\2193";
+  float: right;
+  color: #CCC;
+}
+.dataTable .sorting::after, .dataTable .sorting_desc::after {
+  content: "\2191";
+  float: right;
+  color: #CCC;
+}
+.dataTable .sorting_asc::after {
+  content: "\2191";
+  float: right;
+}
+.dataTable .sorting_desc::before {
+  content: "\2193";
+  float: right;
+}
+td {
+  height: 100%;
+  position: relative;
+}
+td a[href].col-link {
+  position: relative;
+  color: inherit;
+  margin: -0.75rem;
+  padding: 0.75rem;
+  display: block;
+  height: 100%;
+  text-decoration: inherit;
+}

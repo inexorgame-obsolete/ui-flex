@@ -1,4 +1,54 @@
 <template>
+  <div>
+    <!--<input type="text" class="form-control form-fullsize" placeholder="Search" v-on:keyup="searchTable" v-model="searchString" autofocus />-->
+    <table class="table table-striped border-top-0 mb-0" data-datatable="true">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Port</th>
+          <th class="align-text-bottom" data-orderable="false" data-searchable="false">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="instance in instances" v-on:click="">
+          <td>
+            <a :href="'#/instances/' + instance.port" class="col-link">
+              <span class="badge badge-success" v-if="instance.state == 'running'">{{ instance.state }}</span>
+              <span class="badge badge-danger" v-if="instance.state == 'stopped'">{{ instance.state }}</span>
+              <span class="badge badge-warning" v-if="instance.state == 'started'">{{ instance.state }}</span>
+              <span class="badge badge-secondary" v-if="instance.state == 'paused'">{{ instance.state }}</span>
+            </a>
+          </td>
+          <td>
+            <a :href="'#/instances/' + instance.port" class="col-link">
+              <strong>{{ instance.name }}</strong><br />{{ instance.description }}
+            </a>
+          </td>
+          <td><a :href="'#/instances/' + instance.port" class="col-link">{{ instance.port }}</a></td>
+          <td>
+            <div class="btn-group btn-group-sm" role="group">
+              <button v-if="instance.state == 'stopped'" type="button" class="btn btn-secondary" v-on:click="changeStateAction(instance, 'start')">Start</button>
+              <button v-if="instance.state == 'started'" type="button" class="btn btn-secondary" v-on:click="changeStateAction(instance, 'connect')">Connect</button>
+              <button v-if="instance.state == 'started'" type="button" class="btn btn-secondary" v-on:click="changeStateAction(instance, 'stop')">Stop</button>
+              <button v-if="instance.state == 'running'" type="button" class="btn btn-secondary" v-on:click="changeStateAction(instance, 'disconnect')">Disconnect</button>
+              <button v-if="instance.state == 'running'" type="button" class="btn btn-secondary" v-on:click="changeStateAction(instance, 'pause')">Pause</button>
+              <button v-if="instance.state == 'paused'" type="button" class="btn btn-secondary" v-on:click="changeStateAction(instance, 'resume')">Resume</button>
+              <!--
+                <b-btn v-if="item.item.state == 'stopped'" size="sm" @click="changeStateAction(item.item, 'start')">Start</b-btn>
+                <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'connect')">Connect</b-btn>
+                <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'disconnect')">Disconnect</b-btn>
+                <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'pause')">Pause</b-btn>
+                <b-btn v-if="item.item.state == 'paused'" size="sm" @click="changeStateAction(item.item, 'resume')">Resume</b-btn>
+                <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'stop')">Stop</b-btn>
+              -->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--
   <div class="instances">
     <b-tabs>
       <b-tab title="Instances">
@@ -23,15 +73,15 @@
               :per-page="perPage"
               :filter="filter"
               @row-clicked="selectInstance">
-              <template slot="port" scope="item">
+              <template slot="port" slot-scope="item">
                 <strong>{{item.item.port}}</strong>
               </template>
-              <template slot="name" scope="item">
+              <template slot="name" slot-scope="item">
                 <strong>{{item.item.name}}</strong>
                 <br />
                 {{item.item.description}}
               </template>
-              <template slot="actions" scope="item">
+              <template slot="actions" slot-scope="item">
                 <b-btn v-if="item.item.state == 'stopped'" size="sm" @click="changeStateAction(item.item, 'start')">Start</b-btn>
                 <b-btn v-if="item.item.state == 'started'" size="sm" @click="changeStateAction(item.item, 'connect')">Connect</b-btn>
                 <b-btn v-if="item.item.state == 'running'" size="sm" @click="changeStateAction(item.item, 'disconnect')">Disconnect</b-btn>
@@ -108,6 +158,7 @@
       </b-tab>
     </b-tabs>
   </div>
+-->
 </template>
 
 <script>

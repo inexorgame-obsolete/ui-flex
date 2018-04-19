@@ -12,7 +12,7 @@
           </b-form-fieldset>
         </div>
         <b-table striped hover :items="loggers" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
-          <template slot="level" scope="item">
+          <template slot="level" slot-scope="item">
             <div class="btn-group" style="border: 1px solid #cccccc; border-radius: 5px;">
               <button type="button" class="btn btn-default btn-sm" v-if="item.item.level != 'trace'" @click="setLogLevel(item.item, 'trace')">trace</button>
               <button type="button" class="btn btn-info btn-sm" v-if="item.item.level == 'trace'">trace</button>
@@ -28,7 +28,7 @@
               <button type="button" class="btn btn-danger btn-sm" v-if="item.item.level == 'fatal'">fatal</button>
             </div>
           </template>
-          <template slot="console" scope="item">
+          <template slot="console" slot-scope="item">
             <icon name="check-square-o" v-if="item.item.console"></icon>
             <icon name="square-o" v-if="!item.item.console"></icon>
           </template>

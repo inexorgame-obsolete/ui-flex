@@ -12,7 +12,7 @@
           </b-form-fieldset>
         </div>
         <b-table striped hover :items="releases" :fields="fields" :current-page="currentPage" :per-page="perPage" :filter="filter">
-          <template slot="progressBar" scope="item">
+          <template slot="progressBar" slot-scope="item">
             <loading-progress
               :progress="item.item.progress"
               shape="line"

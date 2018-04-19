@@ -1,30 +1,35 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
-import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm';
 import 'vue-awesome/icons';
 
 // Import the styles directly. (Or you could add them via script tags.)
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
-import 'vue-progress-path/dist/vue-progress-path.css';
+import 'bootstrap/dist/js/bootstrap';
+
+import 'jquery/dist/jquery';
+import 'datatables.net-bs4/js/dataTables.bootstrap4';
+
+// import 'vue-progress-path/dist/vue-progress-path.css';
 
 import Icon from 'vue-awesome/components/Icon';
 
-import VueMaterial from 'vue-material';
-import 'vue-material/dist/vue-material.css';
+// import VueMaterial from 'vue-material';
+// import 'vue-material/dist/vue-material.css';
 
-import VueProgress from 'vue-progress-path';
+// import VueProgress from 'vue-progress-path';
 
 import App from './App';
 import router from './router';
 
-Vue.use(BootstrapVue);
-Vue.use(VueMaterial);
-Vue.use(VueProgress);
+import './assets/css/main.css';
+
+// Vue.use(VueMaterial);
+// Vue.use(VueProgress);
 
 Vue.component('icon', Icon);
-const FLEX_HOST = (new URL(document.location)).searchParams.get('flexHost') ? (new URL(document.location)).searchParams.get('flexHost') : '';
+const location = new URL(document.location);
+const FLEX_HOST = location.searchParams.get('flexHost') ? location.searchParams.get('flexHost') : window.location.origin;
 
 Vue.mixin({
   methods: {
